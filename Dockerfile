@@ -5,9 +5,10 @@ RUN apt-get update && apt-get install -y \
     openssh-server \
     sudo \
     ufw \
+    iptables \
     && rm -rf /var/lib/apt/lists/*
 
-# Create sshd runtime directory safely if not already present
+# Create sshd runtime directory safely
 RUN mkdir -p /var/run/sshd
 
 # Create non-root user 'alice' and set password
@@ -22,5 +23,11 @@ RUN sed -i 's/#Port 22/Port 2222/' /etc/ssh/sshd_config && \
 
 EXPOSE 2222
 
+# Copy entrypoint script to handle firewall initialization
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 CMD ["/usr/sbin/sshd", "-D"]
+
 

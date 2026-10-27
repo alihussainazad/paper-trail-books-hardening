@@ -1,0 +1,1 @@
+- [x] Install and configure UFW firewall (Port 2222/tcp allowed, enabled at startup)
