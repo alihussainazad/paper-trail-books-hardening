@@ -1,33 +1,26 @@
 FROM ubuntu:latest
 
-ENV DEBIAN_FRONTEND=noninteractive
-
-# Update system and install OpenSSH, UFW, and sudo
+# Install OpenSSH server, sudo, and security tools
 RUN apt-get update && apt-get install -y \
     openssh-server \
-    ufw \
     sudo \
+    ufw \
     && rm -rf /var/lib/apt/lists/*
 
-# Create SSH run directory safely
+# Create sshd runtime directory safely if not already present
 RUN mkdir -p /var/run/sshd
 
-# 1. Disable root login and fix PAM for Docker containers
-RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin no/' /etc/ssh/sshd_config && \
-    echo "UsePAM no" >> /etc/ssh/sshd_config
+# Create non-root user 'alice' and set password
+RUN useradd -m -s /bin/bash alice && \
+    echo 'alice:alice' | chpasswd && \
+    usermod -aG sudo alice
 
-# 2. Add non-root user 'alice' with sudo access
-RUN useradd -m -s /bin/bash alice && echo 'alice:alicepass' | chpasswd && adduser alice sudo
+# Configure SSH for Port 2222 and hardening options
+RUN sed -i 's/#Port 22/Port 2222/' /etc/ssh/sshd_config && \
+    sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin no/' /etc/ssh/sshd_config && \
+    sed -i 's/UsePAM yes/UsePAM no/' /etc/ssh/sshd_config
 
-# 3. Configure key-based auth for alice
-RUN mkdir -p /home/alice/.ssh && \
-    chmod 700 /home/alice/.ssh && \
-    chown -R alice:alice /home/alice/.ssh
-
-# 4. Allow port 22 and enable UFW via configuration safely
-RUN ufw allow 22 && \
-    sed -i 's/ENABLED=no/ENABLED=yes/' /etc/ufw/ufw.conf
-
-EXPOSE 22
+EXPOSE 2222
 
 CMD ["/usr/sbin/sshd", "-D"]
+
