@@ -16,6 +16,14 @@ RUN useradd -m -s /bin/bash alice && \
     echo 'alice:alice' | chpasswd && \
     usermod -aG sudo alice
 
+# --- PASTE THE PUBLIC KEY INJECTION HERE ---
+RUN mkdir -p /home/alice/.ssh && \
+    echo "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMZYD3r3kVzJWoLHuAVjW7Ctsklqo/810d9vnleNVrfB alice@container" > /home/alice/.ssh/authorized_keys && \
+    chmod 700 /home/alice/.ssh && \
+    chmod 600 /home/alice/.ssh/authorized_keys && \
+    chown -R alice:alice /home/alice/.ssh
+# ---------------------------------------------
+
 # Configure SSH for Port 2222 and hardening options
 RUN sed -i 's/#Port 22/Port 2222/' /etc/ssh/sshd_config && \
     sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin no/' /etc/ssh/sshd_config && \
