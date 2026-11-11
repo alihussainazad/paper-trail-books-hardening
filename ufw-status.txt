@@ -1,0 +1,26 @@
+Status: active
+Logging: on (low)
+Default: deny (incoming), allow (outgoing), deny (routed)
+New profiles: skip
+
+To                         Action      From
+--                         ------      ----
+9050/tcp                   ALLOW IN    Anywhere                  
+9060/tcp                   ALLOW IN    Anywhere                  
+9070/tcp                   ALLOW IN    Anywhere                  
+9080/tcp                   ALLOW IN    Anywhere                  
+9052/tcp                   ALLOW IN    Anywhere                  
+9053/tcp                   ALLOW IN    Anywhere                  
+9054/tcp                   ALLOW IN    Anywhere                  
+9055/tcp                   ALLOW IN    Anywhere                  
+2222/tcp                   ALLOW IN    Anywhere                  
+9050/tcp (v6)              ALLOW IN    Anywhere (v6)             
+9060/tcp (v6)              ALLOW IN    Anywhere (v6)             
+9070/tcp (v6)              ALLOW IN    Anywhere (v6)             
+9080/tcp (v6)              ALLOW IN    Anywhere (v6)             
+9052/tcp (v6)              ALLOW IN    Anywhere (v6)             
+9053/tcp (v6)              ALLOW IN    Anywhere (v6)             
+9054/tcp (v6)              ALLOW IN    Anywhere (v6)             
+9055/tcp (v6)              ALLOW IN    Anywhere (v6)             
+2222/tcp (v6)              ALLOW IN    Anywhere (v6)             
+
