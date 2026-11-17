@@ -1,0 +1,24 @@
+UNIT FILE                          STATE   PRESET
+accounts-daemon.service            enabled enabled
+bluetooth.service                  enabled disabled
+console-setup.service              enabled enabled
+cron.service                       enabled enabled
+docker.service                     enabled enabled
+e2scrub_reap.service               enabled disabled
+getty@.service                     enabled enabled
+haveged.service                    enabled enabled
+keyboard-setup.service             enabled enabled
+lightdm.service                    enabled disabled
+ModemManager.service               enabled enabled
+networking.service                 enabled enabled
+NetworkManager-dispatcher.service  enabled disabled
+NetworkManager-wait-online.service enabled disabled
+NetworkManager.service             enabled enabled
+regenerate-ssh-host-keys.service   enabled enabled
+smartmontools.service              enabled enabled
+systemd-pstore.service             enabled enabled
+systemd-timesyncd.service          enabled enabled
+tor.service                        enabled disabled
+ufw.service                        enabled enabled
+
+21 unit files listed.
