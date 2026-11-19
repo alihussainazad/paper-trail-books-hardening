@@ -1,11 +1,16 @@
 FROM ubuntu:latest
 
-# Install OpenSSH server, sudo, and security tools
-RUN apt-get update && apt-get install -y \
+# Install required packages without recommends, remove unnecessary packages, and clean up
+RUN apt-get update && apt-get install -y --no-install-recommends \
     openssh-server \
     sudo \
     ufw \
     iptables \
+    && ufw default deny incoming \
+    && ufw default allow outgoing \
+    && ufw allow 2222/tcp \
+    && apt-get autoremove -y --purge \
+    && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
 # Create sshd runtime directory safely
